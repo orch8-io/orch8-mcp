@@ -59,7 +59,8 @@ second remote with its fixed URL.
 2. `npm login` as the owning org, then `npm publish --access public` from a clean build.
    The package name must start with `n8n-nodes-` and carry the `n8n-community-node-package` keyword.
 3. Users install it through n8n **Settings → Community Nodes → Install** with `n8n-nodes-orch8`.
-4. For "verified" status, which also makes it available on n8n Cloud: submit through the n8n Creator Portal
+4. Run `npx @n8n/scan-community-package n8n-nodes-orch8` after publishing.
+5. For "verified" status, which also makes it available on n8n Cloud: submit through the n8n Creator Portal
    (<https://creators.n8n.io>) and follow n8n's verification guidelines (no runtime deps, linter clean,
    published with npm provenance from GitHub Actions per n8n's current rules).
 
@@ -74,8 +75,7 @@ reachable Orch8 engine and an API key.
 
 ## 6. Make
 
-Create the app in Make (**Custom apps → Create app**, or through the Make Apps VS Code extension), then paste or
-push each component from `integrations/make-orch8` as its README describes. Test it in a private
+Create an empty app in Make, put its `appId`/zone into `origins` in `makecomapp.json` (API token with `sdk-apps` scopes in the git-ignored `.secrets/apikey`), then **Deploy to Make** from the Make Apps Editor VS Code extension. Alternatively, paste each component into the web editor as `integrations/make-orch8/README.md` describes. Test it in a private
 scenario, and to share, **Publish** (link-shared). For the public app directory, **Request review**
 from the app's page. Make's review requires docs, a test account, and a verified connection.
 
