@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "orch8": {
+      "url": "http://localhost:8080/api/v1/mcp",
+      "headers": {
+        "x-api-key": "${env:ORCH8_API_KEY}",
+        "x-tenant-id": "${env:ORCH8_TENANT_ID}"
+      }
+    }
+  }
+}

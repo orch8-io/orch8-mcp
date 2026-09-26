@@ -1,0 +1,38 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.orch8/orch8",
+  "title": "Orch8",
+  "description": "Author, lint, preflight and run durable Orch8 workflows; inspect instances, signals and DLQ.",
+  "version": "0.7.1",
+  "websiteUrl": "https://orch8.io",
+  "repository": {
+    "url": "https://github.com/orch8-io/engine",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://{orch8_host}/api/v1/mcp",
+      "variables": {
+        "orch8_host": {
+          "description": "Host (and optional port) of your self-hosted Orch8 engine, e.g. orch8.example.com",
+          "isRequired": true,
+          "format": "string"
+        }
+      },
+      "headers": [
+        {
+          "name": "x-api-key",
+          "description": "Orch8 API key (root key or a tenant key with the operator capability)",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "x-tenant-id",
+          "description": "Tenant the MCP session operates in (required unless the key is tenant-scoped)",
+          "isRequired": false
+        }
+      ]
+    }
+  ]
+}

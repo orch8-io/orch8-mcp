@@ -1,0 +1,26 @@
+{
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "orch8-api-key",
+      "description": "Orch8 API key",
+      "password": true
+    },
+    {
+      "type": "promptString",
+      "id": "orch8-tenant-id",
+      "description": "Orch8 tenant id",
+      "default": "demo"
+    }
+  ],
+  "servers": {
+    "orch8": {
+      "type": "http",
+      "url": "http://localhost:8080/api/v1/mcp",
+      "headers": {
+        "x-api-key": "${input:orch8-api-key}",
+        "x-tenant-id": "${input:orch8-tenant-id}"
+      }
+    }
+  }
+}

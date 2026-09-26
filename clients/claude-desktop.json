@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "orch8": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://localhost:8080/api/v1/mcp",
+        "--header",
+        "x-api-key:${ORCH8_API_KEY}",
+        "--header",
+        "x-tenant-id:${ORCH8_TENANT_ID}"
+      ],
+      "env": {
+        "ORCH8_API_KEY": "replace-with-your-key",
+        "ORCH8_TENANT_ID": "demo"
+      }
+    }
+  }
+}
