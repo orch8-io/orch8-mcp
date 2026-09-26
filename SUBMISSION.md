@@ -66,8 +66,8 @@ second remote with its fixed URL.
 ## 5. Zapier
 
 From `integrations/zapier-orch8`:
-`npx zapier-platform-cli login`, then `npx zapier-platform-cli register "Orch8"` (once), then
-`npx zapier-platform-cli push`, then invite beta testers with `zapier users:add` / `zapier invite`.
+`npx zapier-platform login`, then `npx zapier-platform register "Orch8"` (once), then
+`npx zapier-platform push`, then invite beta testers with `npx zapier-platform users:add`, then `npx zapier-platform promote 0.1.0`.
 Public listing: complete the Zapier Developer Platform publishing requirements (at least 3 live users with active Zaps, logo, descriptions,
 test account for reviewers) and click **Publish** in developer.zapier.com. The reviewer needs a
 reachable Orch8 engine and an API key.
