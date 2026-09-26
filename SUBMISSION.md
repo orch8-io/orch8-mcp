@@ -1,7 +1,9 @@
 # Submission checklist: Orch8 integrations
 
-Nothing in these repos has been pushed or published. Every step below is manual
-and needs the owner's accounts. Repos:
+All five integration repos are public on GitHub under `orch8-io`, with CI and
+tag-triggered GitHub Releases. Nothing has been published to npm, Zapier, Make or
+the MCP Registry: those steps need the owner's accounts (or the repository
+secrets named below, which make the release workflows publish on the next tag). Repos:
 
 | Deliverable | Local repo |
 |---|---|
@@ -14,7 +16,7 @@ and needs the owner's accounts. Repos:
 
 ## 1. Official MCP Registry (registry.modelcontextprotocol.io)
 
-1. Create a public GitHub repo (e.g. `orch8-io/mcp`) and push `integrations/mcp`.
+1. Done: `integrations/mcp` is <https://github.com/orch8-io/orch8-mcp>.
 2. Install the publisher: `brew install mcp-publisher` (or download it from the
    `modelcontextprotocol/registry` GitHub releases).
 3. Prove ownership of the `io.orch8/*` namespace through DNS:
@@ -24,6 +26,8 @@ and needs the owner's accounts. Repos:
    - `mcp-publisher login dns --domain orch8.io --private-key <hex seed>`
    - Alternative: rename to `io.github.orch8-io/orch8` and run `mcp-publisher login github`.
 4. `npm test` (schema check), then `mcp-publisher publish` from this directory.
+   Or let CI do steps 2-4: store the hex private key as the repository secret `MCP_PRIVATE_KEY`
+   and push a `v*` tag (see README "CI and releases").
 5. Verify with `curl "https://registry.modelcontextprotocol.io/v0/servers?search=io.orch8/orch8"`.
 6. On every engine release, bump `version` in `server.json` and publish again.
    Published versions are immutable.
