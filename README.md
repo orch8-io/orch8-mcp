@@ -53,6 +53,42 @@ Do not commit literal API keys. Prefer a tenant key with the least capability
 that works (`operator` for authoring/running, `approver` only answers human
 gates).
 
+## Embedded workflows mode (`o8e1` embed tokens)
+
+Vendors that embed Orch8 in their product can give each end customer an AI
+assistant that sees **only that customer's workflows**. `embed/` is a
+dependency-free MCP server (Node 18+) authenticated by an `o8e1` embed token
+(issued by the vendor backend with `POST /api/v1/embed/tokens`, max TTL 1 h).
+It talks to the engine's sub-tenant-scoped `/api/v1/embed/*` routes only, and
+never holds or accepts a tenant API key.
+
+| Tool | Shown when the token has | Engine route |
+|---|---|---|
+| `start_<sequence>` (one per allowed sequence; `inputSchema` = the sequence's `input_schema` when `sequences:read` is granted) | `runs:start` | `POST /embed/runs` |
+| `list_runs`, `get_run` | `runs:read` | `GET /embed/runs`, `GET /embed/runs/{id}` |
+| `list_pending_approvals` | `runs:read` or `approvals:resolve` | `GET /embed/approvals` |
+| `resolve_approval` | `approvals:resolve` | `POST /embed/approvals/{id}` |
+
+Tenant-level tools (`list_sequences`, `create_instance`, `send_signal`,
+`get_usage`, ...) do not exist in this mode; calling one is an unknown-tool
+error. The token's `seq` list decides which `start_` tools appear (`seq: null`
+lists the sub-tenant's sequences through `GET /embed/sequences`). The server
+only decodes the token to build the catalog; the engine verifies signature,
+expiry, sub-tenant and allow-list on every call.
+
+```bash
+# stdio, one end user (Claude Desktop, Cursor, ...)
+ORCH8_URL=https://orch8.example.com ORCH8_EMBED_TOKEN=o8e1... node embed/bin.mjs
+# ORCH8_EMBED_TOKEN_FILE=/path/to/token is re-read on every request, so a refreshed token takes effect
+
+# Streamable HTTP, many end users: each request sends its own Authorization: Bearer o8e1...
+ORCH8_URL=https://orch8.example.com node embed/bin.mjs --http --port 8787 --host 127.0.0.1
+```
+
+The HTTP endpoint (`POST /mcp`) answers 401 to requests without an `o8e1`
+bearer token, including `x-api-key` tenant credentials. Tests:
+`embed/embed.test.mjs` (part of `npm test` / `pnpm test`).
+
 ## Checking the files
 
 ```bash
