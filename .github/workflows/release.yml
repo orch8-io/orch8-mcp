@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir dist
           cp server.json dist/server.json
-          zip -r "dist/orch8-mcp-clients-$GITHUB_REF_NAME.zip" clients README.md LICENSE
+          zip -r "dist/orch8-mcp-clients-$GITHUB_REF_NAME.zip" clients embed README.md LICENSE -x "embed/*.test.mjs"
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}

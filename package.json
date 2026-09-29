@@ -4,8 +4,14 @@
   "version": "0.7.1",
   "description": "MCP registry manifest and client configs for Orch8's remote MCP endpoint",
   "type": "module",
+  "bin": {
+    "orch8-embed-mcp": "embed/bin.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "test": "node --test scripts/validate.test.mjs"
+    "test": "node --test scripts/validate.test.mjs embed/embed.test.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1",
